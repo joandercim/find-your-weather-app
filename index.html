@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" /> -->
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -16,9 +17,6 @@
         <div class="buttons">
             <div id="sunny" class="btn">
                 <i class="fa-solid fa-sun"></i>
-            </div>
-            <div id="halfclear" class="btn">
-                <i class="fa-solid fa-cloud-sun"></i>
             </div>
             <div id="cloudy" class="btn">
                 <i class="fa-solid fa-cloud"></i>
@@ -37,23 +35,40 @@
             </div>
         </div>
         <div id="response" class="container">
-            <h2>There is currently snowing in</h2>
-            <div class="response-cards">
-                <div class="card">
-                    <h3>Mariestad</h3>
-                    <p class="coord">lng: 15.334 lat 59.332</p>
-                    <p class="more">Read more</p>
-                </div>
-                <div class="card">
-                    <h3>Mariestad</h3>
-                    <p class="coord">lng: 15.334 lat 59.332</p>
-                    <p class="more">Read more</p>
-                </div>
-                <div class="card">
-                    <h3>Mariestad</h3>
-                    <p class="coord">lng: 15.334 lat 59.332</p>
-                    <p class="more">Read more</p>
-                </div>
+            <div class="response-cards"></div>
+        </div>
+    </div>
+    <div class="modal">
+        <i class="fa-solid fa-xmark"></i>
+        <div class="information">
+            <h1>Falköping</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore vero aspernatur facere optio error suscipit, iusto libero repellat nostrum veniam ipsa quo enim magni veritatis expedita ducimus assumenda. Maiores nulla expedita tenetur adipisci cupiditate atque quae dolore assumenda saepe fuga a asperiores, quam libero deleniti nesciunt illum, voluptatem, est obcaecati!</p>
+        </div>
+            <div class="widget-container">            
+            <div class="widget">
+                Air Temp
+                <p>
+                    <span class="num">7</span><br>
+                    °C
+                </p>
+            </div>
+            <div class="widget">
+                Wind speed
+                <p>
+                    <span class="num">7</span><br>
+                    m/s
+                </p>
+            </div>
+            <div class="widget">
+                Precipitation intensity
+                <p>
+                    <span class="num">7</span><br>
+                    mm/h
+                </p>
+            </div>
+            <div class="widget">
+                Luftemperatur
+                <span class="num">7°C</span>
             </div>
         </div>
     </div>

@@ -80,34 +80,83 @@ function interpretUserInput(id) {
       weatherCode = [8, 9, 10, 18, 19, 20];
       break;
     case 'thunder':
-      weatherCode = [3, 4, 21];
+      weatherCode = [21, 11];
       break;
     case 'snowing':
       weatherCode = [25, 26, 27, 13, 14, 15, 16, 17];
       break;
   }
-    fetchWeatherData();
+  fetchWeatherData();
 }
 
-function displayResults() {
-    responseContainer.innerHTML = '';
-  const h2 = document.createElement('h2');
-
+async function displayResults() {
+  responseContainer.innerHTML = '';
+  const h2 = document.createElement('h2'); 
+  
+  
   if (matches.length === 0) {
-    h2.textContent = `Sorry, right now there is no cities in Sweden where it's ${userInput}`;
+    h2.textContent = `Sorry, there is not going to be ${userInput} in any of our cities today.`;
     responseContainer.appendChild(h2);
     return;
   }
 
-  h2.textContent = `There is currently ${userInput} in`;
+  h2.textContent = `Yes! Today there is supposed to be ${userInput} in`;
   responseContainer.appendChild(h2);
 
+  const responseCards = document.createElement('div');
+  responseCards.className = 'response-cards';
+  responseContainer.append(responseCards);
+
+
   matches.forEach((city) => {
-    const h2 = document.createElement('h2');
-    h2.textContent = city.city;
-    responseContainer.appendChild(h2);
+    const div = document.createElement('div');
+    div.className = 'card';
+
+    div.innerHTML = `
+    <h3>${city.city}</h3>
+    <p class="coord">
+      LAT: ${city.lat}
+    </p>
+    <p class="coord">
+      LNG: ${city.lng}
+    </p>
+    <p class="more btn" id=${city.city}>Read more</p>
+    `;
+
+    responseCards.append(div);
   });
-    matches = [];
+  matches = [];
 }
 
+async function getKeywords(weather) {
+  let keyword = '';
+
+  switch (weather) {
+    case 'sunny':
+      keyword = 'sunny';
+      break;
+    case 'cloudy':
+      keyword = 'cloudy';
+      break;
+  }
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTYxZTBiNjFlYTY5MDhlM2IzNGZkYzhlMDViZGQwZCIsInN1YiI6IjY0MjAxNmZlMmRjOWRjMDBmZDFiMzZiMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.f5VD8-Y1HJ8yI6ISuM9nql6F5sWAnPO7eZTs3cEa2O0',
+    },
+  };
+
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/keyword?query=${keyword}&page=1`,
+    options
+  );
+  const data = await res.json();
+
+  console.log(data);
+}
+
+getKeywords();
 document.querySelector('.buttons').addEventListener('click', getUserInput);

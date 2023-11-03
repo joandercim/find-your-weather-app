@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,12 +7,31 @@
     border-style: none;
 }
 
+:root {
+    --dark-blue-btn: rgb(25,30,36);
+    --main-blue: rgb(29,35,42);
+}
+
 .text-center {
     text-align: center;
 }
 
 body {
-    background-color: #333;
+    background-color: var(--main-blue);
+    color: #fff;
+    font-family: 'Roboto';
+}
+
+h1,
+h2,
+h3, 
+h4,
+h5 {
+    font-weight: 300;
+}
+
+h1 {
+    margin-bottom: 1rem;
 }
 
 .container {
@@ -20,20 +41,29 @@ body {
 
 .buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 40px 20px;
     width: 90%;
     margin: 50px auto;
 }
 
-.buttons .btn {
+.btn {
     border: 1px solid transparent;
-    padding: 20px;
+    border-radius: 10px;
+    opacity: .7;
+    transition: opacity .3s ease-in-out;
+    cursor: pointer;
 }
 
-.buttons .btn:hover {
-    border: 1px solid black;
+.buttons .btn {
+    padding: 30px;
+    background-color: var(--dark-blue-btn);
+}
+
+.btn:hover {
+    border: 1px solid rgb(69, 69, 69);
     border-radius: 10px;
+    opacity: 1;
 }
 
 .buttons i.fa-solid {
@@ -44,22 +74,77 @@ body {
     display: flex;
     gap: 30px;
     margin: 0 auto;
-    padding: 40px ;
+    padding: 40px;
     flex-flow: row wrap;
+    position: relative;
 }
 
 .card {
-    border: 1px solid black;
-    min-width: 17rem;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     align-items: start;
     flex-direction: column;
+    flex-grow: 1;
+    min-width: 40%;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--dark-blue-btn);
 }
 
 .more {
+    margin-top: 20px;
     align-self: end;
+    padding: 10px;
+}
+
+.information {
+    position: relative;
+}
+
+.modal {
+    max-width: 1000px;
+    height: 700px;
+    background-color: var(--dark-blue-btn);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.22);
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal i.fa-xmark {
+    font-size: 1.5rem;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.widget-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.widget-container .widget {
+    width: 200px;
+    height: 200px;
+    border: 1px solid white;
+    border-radius: 50%;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    padding-top: 3rem;
+}
+
+.widget-container .widget span {
+    font-size: 4rem;
 }
 
 @media (max-width:766px) {
