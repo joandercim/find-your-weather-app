@@ -152,6 +152,15 @@ h1 {
     font-size: 4rem;
 }
 
+.last-update {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    text-align: center;
+}
+
 @media (max-width:766px) {
     .buttons {
         grid-template-columns: repeat(3, 1fr);
