@@ -4,6 +4,14 @@ let weatherInfo = '';
 const responseContainer = document.getElementById('response');
 let userInput = '';
 
+function showSpinner() {
+  document.getElementById('spinner').style.display = 'inline-block';
+}
+
+function hideSpinner() {
+  document.getElementById('spinner').style.display = 'none';
+}
+
 async function getCities() {
   const res = await fetch('./cities.json');
   const cities = await res.json();
@@ -16,11 +24,13 @@ async function fetchWeatherData() {
   for (const city of cities) {
     await getData(city);
   }
+  hideSpinner();
   displayResults();
 }
 
 async function getData(inputCity) {
   const { city, lng, lat } = inputCity;
+  showSpinner();
 
   try {
     const res = await fetch(
@@ -91,22 +101,20 @@ function interpretUserInput(id) {
 
 async function displayResults() {
   responseContainer.innerHTML = '';
-  const h2 = document.createElement('h2'); 
-  
-  
+  const h2 = document.createElement('h2');
+  const responseCards = document.createElement('div');
+
   if (matches.length === 0) {
     h2.textContent = `Sorry, there is not going to be ${userInput} in any of our cities today.`;
     responseContainer.appendChild(h2);
+    responseContainer.append(responseCards);
     return;
   }
 
   h2.textContent = `Yes! Today there is supposed to be ${userInput} in`;
   responseContainer.appendChild(h2);
-
-  const responseCards = document.createElement('div');
   responseCards.className = 'response-cards';
   responseContainer.append(responseCards);
-
 
   matches.forEach((city) => {
     const div = document.createElement('div');
@@ -128,35 +136,4 @@ async function displayResults() {
   matches = [];
 }
 
-async function getKeywords(weather) {
-  let keyword = '';
-
-  switch (weather) {
-    case 'sunny':
-      keyword = 'sunny';
-      break;
-    case 'cloudy':
-      keyword = 'cloudy';
-      break;
-  }
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTYxZTBiNjFlYTY5MDhlM2IzNGZkYzhlMDViZGQwZCIsInN1YiI6IjY0MjAxNmZlMmRjOWRjMDBmZDFiMzZiMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.f5VD8-Y1HJ8yI6ISuM9nql6F5sWAnPO7eZTs3cEa2O0',
-    },
-  };
-
-  const res = await fetch(
-    `https://api.themoviedb.org/3/search/keyword?query=${keyword}&page=1`,
-    options
-  );
-  const data = await res.json();
-
-  console.log(data);
-}
-
-getKeywords();
 document.querySelector('.buttons').addEventListener('click', getUserInput);
