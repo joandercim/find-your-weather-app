@@ -153,12 +153,30 @@ h1 {
 }
 
 .last-update {
-    position: absolute;
-    bottom: 20px;
-    right: 0;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.overlay {
+    border: 2px solid white;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
     left: 0;
-    margin: auto;
-    text-align: center;
+    z-index: -1;
+    background-image: url('https://images.unsplash.com/photo-1541480110211-586977e40589?q=80&w=2693&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: .1;
+    transition: background-imgage .5s ease-in-out;
+    /* clear skies: https://images.unsplash.com/12/sun-trees.jpg?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */
+    /* rain: https://images.unsplash.com/photo-1520609798519-2e1e8c18df3a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */
+    /* thunder: https://images.unsplash.com/photo-1431440869543-efaf3388c585?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */
+    /* overcast: https://images.unsplash.com/photo-1485249245068-d8dc50b77cc7?q=80&w=2662&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */
+    /* snow: https://images.unsplash.com/photo-1577457943926-11193adc0563?q=80&w=2702&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D */
 }
 
 @media (max-width:766px) {
