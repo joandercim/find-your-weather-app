@@ -94,6 +94,19 @@ class App {
   openModal(id) {
     document.querySelector('.modal').style.display = 'flex';
     document.querySelector('.information h1').textContent = id;
+    this.getCityInfo(id);
+  }
+
+  async getCityInfo(city) {
+    const res = await fetch(`/${city}`);
+    const data = await res.json();
+    const pageId = Object.keys(data.query.pages);
+    const summary = data.query.pages[pageId].extract;
+    const title = data.query.pages[pageId].title;
+
+    const outputString = summary.replace(/\(.*?\)/, '');
+
+    document.querySelector('.modal .information p').textContent = outputString;
   }
 
   handleReadMore(e) {
