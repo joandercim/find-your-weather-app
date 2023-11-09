@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" /> -->
-    <script src="new-script.js" defer></script>
+    <link rel="stylesheet" href="./resources/css/style.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
     <div class="overlay"></div>
@@ -33,12 +32,18 @@
                 <i class="fa-solid fa-smog"></i>
             </div>
         </div>
-        <img id="spinner" src="resources/img/ZKZg.gif" alt="Loading" width="50px">
         <div id="response" class="container">
-            <div class="response-cards"></div>
+            <div id="loading">
+                <h3 id="loading-cities"></h3>
+                <div id="process">
+                    <div id="progress-inner"></div>
+                </div>
+            </div>
+                <img id="spinner" src="../resources/img/ZKZg.gif" alt="Loading" width="50px">
+             </div>
         </div>
     </div>
-    <!-- <div class="modal">
+    <div class="modal">
         <i class="fa-solid fa-xmark"></i>
         <div class="information">
             <h1>Falköping</h1>
@@ -71,7 +76,7 @@
                 <span class="num">7°C</span>
             </div>
         </div>
-    </div> -->
+    </div>
     <div class="last-update">
         Weather fetched 2023-11-06 16:07
     </div>

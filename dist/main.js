@@ -10,25 +10,42 @@ class App {
   }
 
   async getCities() {
-    const res = await fetch('./cities.json');
+    const res = await fetch('../resources/cities.json');
     const cities = await res.json();
     return cities;
   }
 
   async getWeatherByCity() {
-    this.showSpinner();
+    this.showLoading();
     const cities = await this.getCities();
 
     for (const city of cities) {
       await this.fetchCurrentWeather(city);
+      document.getElementById(
+        'loading-cities'
+      ).textContent = `Loading cities. ${this.fetchedCities.length}/120`;
+      document.getElementById('progress-inner').style.width = `${
+        this.fetchedCities.length - 20
+      }%`;
     }
-    this.hideSpinner();
+    document.getElementById('loading-cities').textContent =
+      'Weather from 120 cities loaded';
+
+    const date = new Date().toLocaleString();
+    document.querySelector(
+      '.last-update'
+    ).textContent = `Weather information fetched ${date}`;
+
+    setTimeout(() => {
+      this.hideLoading();
+    }, 2000);
   }
 
   async fetchCurrentWeather(inputCity) {
     const { city, lng, lat } = inputCity;
 
     try {
+      // const res = await fetch(`/weather/${lng}/${lat}`);
       const res = await fetch(
         `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${lng}/lat/${lat}/data.json`
       );
@@ -40,11 +57,6 @@ class App {
       const data = await res.json();
       // Create new city with data from local json and SMHI
       const storedCity = new newCity(city, lat, lng, data);
-
-      const date = new Date().toLocaleString();
-      document.querySelector(
-        '.last-update'
-      ).textContent = `Weather information fetched ${date}`;
 
       this.fetchedCities.push(storedCity);
     } catch (error) {
@@ -60,12 +72,39 @@ class App {
     document
       .querySelector('.buttons')
       .addEventListener('click', this.handleClick.bind(this));
+    document
+      .querySelector('#response')
+      .addEventListener('click', (e) => this.handleReadMore(e));
+    document
+      .querySelector('.fa-xmark')
+      .addEventListener('click', this.closeModal);
   }
 
   handleClick(e) {
     const button = e.target.closest('.btn');
     if (button) {
       this.interpretUserInput(button.id);
+    }
+  }
+
+  closeModal() {
+    document.querySelector('.modal').style.display = 'none';
+  }
+
+  openModal(id) {
+    document.querySelector('.modal').style.display = 'flex';
+    document.querySelector('.information h1').textContent = id;
+  }
+
+  handleReadMore(e) {
+    if (
+      e.target.id !== 'response' &&
+      e.target.className !== 'card' &&
+      e.target.className !== 'response-card'
+    ) {
+      if (e.target.id) {
+        this.openModal(e.target.id);
+      }
     }
   }
 
@@ -130,6 +169,7 @@ class App {
   displayMatches(userInput) {
     this.responseContainer.innerHTML = '';
     const h2 = document.createElement('h2');
+    h2.className = 'text-center';
     const responseCards = document.createElement('div');
 
     if (this.matches.length === 0) {
@@ -139,19 +179,26 @@ class App {
       return;
     }
 
-    // if (this.success === false) {
-    //   h2.textContent = `Something went wrong wile fetching the data. Please come back later`;
-    //   this.responseContainer.appendChild(h2);
-    //   this.responseContainer.append(responseCards);
-    //   console.log('WERJKFLDSJKLFJDKSLJFLKSD');
-    // }
-
     h2.textContent = `Yes! There currently ${userInput} in ${this.matches.length} cities.`;
     this.responseContainer.appendChild(h2);
     responseCards.className = 'response-cards';
     this.responseContainer.append(responseCards);
 
-    this.matches.forEach((city) => {
+    let matchesSorted = this.matches.sort((a, b) => {
+      const nameA = a.city.toUpperCase(); // ignore upper and lowercase
+      const nameB = b.city.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+
+    matchesSorted.forEach((city) => {
       const div = document.createElement('div');
       div.className = 'card';
 
@@ -163,18 +210,21 @@ class App {
     <p class="coord">
       LNG: ${city.lng}
     </p>
-    <p class="more btn" id=${city.city}>Read more</p>
+    <p class="more btn" id=${city.city} >Read more</p>
     `;
       responseCards.append(div);
     });
   }
 
-  showSpinner() {
-    document.getElementById('spinner').style.display = 'inline-block';
+  showLoading() {
+    // document.getElementById('spinner').style.display = 'inline-block';
   }
 
-  hideSpinner() {
+  hideLoading() {
     document.getElementById('spinner').style.display = 'none';
+    document.getElementById('process').style.width = '10px';
+    document.getElementById('process').style.opacity = '0';
+    document.getElementById('loading-cities').style.opacity = '0';
   }
 }
 
