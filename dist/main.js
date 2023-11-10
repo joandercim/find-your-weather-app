@@ -6,6 +6,7 @@ class App {
     this.fetchedCities = [];
     this.matches = [];
     this.responseContainer = document.getElementById('response');
+    this.weatherIcon = '';
     // this.success = true;
   }
 
@@ -16,7 +17,6 @@ class App {
   }
 
   async getWeatherByCity() {
-    this.showLoading();
     const cities = await this.getCities();
 
     for (const city of cities) {
@@ -38,7 +38,7 @@ class App {
 
     setTimeout(() => {
       this.hideLoading();
-    }, 2000);
+    }, 750);
   }
 
   async fetchCurrentWeather(inputCity) {
@@ -93,8 +93,70 @@ class App {
 
   openModal(id) {
     document.querySelector('.modal').style.display = 'flex';
+    document.querySelector('body').classList.add('modal-open');
     document.querySelector('.information h1').textContent = id;
     this.getCityInfo(id);
+    this.getCityWeather(id);
+  }
+
+  async getCityWeather(id) {
+    this.matches.forEach((obj) => console.log(obj.city));
+    const currentCity = this.matches.filter((city) => city.city === id);
+
+    const weather = currentCity[0].weatherInfo.weatherInfo.timeSeries[0];
+    const airTemp = weather.parameters[10].values[0];
+    const windSpeed = weather.parameters[14].values[0];
+    const precipi = weather.parameters[5].values[0];
+    const thunderProb = weather.parameters[16].values[0];
+    const horizontalVisibility = weather.parameters[12].values[0];
+    console.log(weather)
+
+    const airTempEl = document.getElementById('air-temp');
+    const windSpeedEl = document.getElementById('wind-speed');
+    const precipiEl = document.getElementById('pricipitation');
+    const thunderProbEl = document.getElementById('thunder-prob');
+    const visEl = document.getElementById('visibility');
+
+    let airTempCounter = 0;
+    let windSpeedCounter = 0;
+    let pricipiCounter = 0;
+    let thunderCounter = 0;
+    let visibilityCounter = 0;
+
+    for (let i = 0; i < airTemp; i++) {
+      setTimeout(() => {
+        airTempCounter++;
+        airTempEl.textContent = airTempCounter;
+      }, 100 * i);
+    }
+
+    for (let i = 0; i < windSpeed; i++) {
+      setTimeout(() => {
+        windSpeedCounter++;
+        windSpeedEl.textContent = windSpeedCounter;
+      }, 100 * i);
+    }
+
+    for (let i = 0; i < precipi; i++) {
+      setTimeout(() => {
+        pricipiCounter++;
+        precipiEl.textContent = pricipiCounter;
+      }, 100 * i);
+    }
+
+    for (let i = 0; i < thunderProb; i++) {
+      setTimeout(() => {
+        thunderCounter++;
+        thunderProbEl.textContent = thunderCounter;
+      }, 100 * i);
+    }
+
+    for (let i = 0; i < horizontalVisibility; i++) {
+      setTimeout(() => {
+        visibilityCounter++;
+        visEl.textContent = visibilityCounter;
+      }, 100 * i);
+    }
   }
 
   async getCityInfo(city) {
@@ -103,6 +165,8 @@ class App {
     const pageId = Object.keys(data.query.pages);
     const summary = data.query.pages[pageId].extract;
     const title = data.query.pages[pageId].title;
+
+    console.log(data.query.pages[pageId]);
 
     const outputString = summary.replace(/\(.*?\)/, '');
 
@@ -128,30 +192,36 @@ class App {
     switch (userInput) {
       case 'clear-skies':
         weatherCodes = [1, 2, 3];
+        this.weatherIcon = 'sun';
         backgroundElement.style.backgroundImage =
           'url(https://images.unsplash.com/photo-1550133730-695473e544be?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)';
         break;
       case 'cloudy':
         weatherCodes = [5, 6];
+        this.weatherIcon = 'cloud';
         backgroundElement.style.backgroundImage =
           'url(https://images.unsplash.com/photo-1485249245068-d8dc50b77cc7?q=80&w=2662&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)';
         break;
       case 'foggy':
+        this.weatherIcon = 'smog';
         backgroundElement.style.backgroundImage =
           'url(https://images.unsplash.com/photo-1541480110211-586977e40589?q=80&w=2693&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)';
         weatherCodes = [7];
         break;
       case 'raining':
+        this.weatherIcon = 'cloud-showers-heavy';
         backgroundElement.style.backgroundImage =
           'url(https://images.unsplash.com/photo-1519692933481-e162a57d6721?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)';
         weatherCodes = [8, 9, 10, 18, 19, 20];
         break;
       case 'thunder':
+        this.weatherIcon = 'cloud-bolt';
         backgroundElement.style.backgroundImage =
           'url(https://images.unsplash.com/photo-1431440869543-efaf3388c585?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)';
         weatherCodes = [21, 11];
         break;
       case 'snowing':
+        this.weatherIcon = 'snowflake';
         weatherCodes = [25, 26, 27, 13, 14, 15, 16, 17];
         backgroundElement.style.backgroundImage =
           'url(https://images.unsplash.com/photo-1577457943926-11193adc0563?q=80&w=2702&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)';
@@ -216,25 +286,19 @@ class App {
       div.className = 'card';
 
       div.innerHTML = `
+      <i class="fa-solid fa-${this.weatherIcon}"></i>
     <h3>${city.city}</h3>
-    <p class="coord">
-      LAT: ${city.lat}
-    </p>
-    <p class="coord">
-      LNG: ${city.lng}
-    </p>
+    <div class="coordinates">
+              <p><em>LAT: ${city.lat}</em></p>
+              <p><em>LNG: ${city.lng}</em></p>
+            </div>
     <p class="more btn" id=${city.city} >Read more</p>
     `;
       responseCards.append(div);
     });
   }
 
-  showLoading() {
-    // document.getElementById('spinner').style.display = 'inline-block';
-  }
-
   hideLoading() {
-    document.getElementById('spinner').style.display = 'none';
     document.getElementById('process').style.width = '10px';
     document.getElementById('process').style.opacity = '0';
     document.getElementById('loading-cities').style.opacity = '0';

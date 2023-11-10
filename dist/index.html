@@ -1,85 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./resources/css/style.css">
+    <link rel="stylesheet" href="./resources/css/style.css" />
     <script src="main.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="overlay"></div>
-        <div class="container text-center">
-            <h1>Find your weather</h1>
-            <h2>What are you in the mood for?</h2>
-            <div class="buttons">
-                <div id="clear-skies" class="btn">
-                    <i class="fa-solid fa-sun"></i>
-                </div>
-                <div id="cloudy" class="btn">
-                    <i class="fa-solid fa-cloud"></i>
-                </div>
-                <div id="thunder" class="btn">
-                    <i class="fa-solid fa-cloud-bolt"></i>
-                </div>
-                <div id="raining" class="btn">
-                <i class="fa-solid fa-cloud-showers-heavy"></i>
-            </div>
-            <div id="snowing" class="btn">
-                <i class="fa-solid fa-snowflake"></i>
-            </div>
-            <div id="foggy" class="btn">
-                <i class="fa-solid fa-smog"></i>
-            </div>
+    <div class="container text-center">
+      <h1>Find your weather</h1>
+      <h2>What are you in the mood for?</h2>
+      <div class="buttons">
+        <div id="clear-skies" class="btn">
+          <i class="fa-solid fa-sun"></i>
         </div>
-        <div id="response" class="container">
-            <div id="loading">
-                <h3 id="loading-cities"></h3>
-                <div id="process">
-                    <div id="progress-inner"></div>
-                </div>
-            </div>
-                <img id="spinner" src="../resources/img/ZKZg.gif" alt="Loading" width="50px">
-             </div>
+        <div id="cloudy" class="btn">
+          <i class="fa-solid fa-cloud"></i>
         </div>
+        <div id="thunder" class="btn">
+          <i class="fa-solid fa-cloud-bolt"></i>
+        </div>
+        <div id="raining" class="btn">
+          <i class="fa-solid fa-cloud-showers-heavy"></i>
+        </div>
+        <div id="snowing" class="btn">
+          <i class="fa-solid fa-snowflake"></i>
+        </div>
+        <div id="foggy" class="btn">
+          <i class="fa-solid fa-smog"></i>
+        </div>
+      </div>
+      <div id="response" class="container">
+        <div id="loading">
+          <h3 id="loading-cities"></h3>
+          <div id="process">
+            <div id="progress-inner"></div>
+          </div>
+        </div>
+        <img
+          id="spinner"
+          src="../resources/img/ZKZg.gif"
+          alt="Loading"
+          width="50px"
+        />
+      </div>
     </div>
     <div class="modal">
-        <i class="fa-solid fa-xmark"></i>
-        <div class="information">
-            <h1>Falköping</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore vero aspernatur facere optio error suscipit, iusto libero repellat nostrum veniam ipsa quo enim magni veritatis expedita ducimus assumenda. Maiores nulla expedita tenetur adipisci cupiditate atque quae dolore assumenda saepe fuga a asperiores, quam libero deleniti nesciunt illum, voluptatem, est obcaecati!</p>
+      <i class="fa-solid fa-xmark"></i>
+      <div class="information">
+        <h1>Falköping</h1>
+        <div class="city-info">
+          <p>
+          </p>
         </div>
-            <div class="widget-container">            
-            <div class="widget">
-                Air Temp
-                <p>
-                    <span class="num">7</span><br>
-                    °C
-                </p>
-            </div>
-            <div class="widget">
-                Wind speed
-                <p>
-                    <span class="num">7</span><br>
-                    m/s
-                </p>
-            </div>
-            <div class="widget">
-                Precipitation intensity
-                <p>
-                    <span class="num">7</span><br>
-                    mm/h
-                </p>
-            </div>
-            <div class="widget">
-                Luftemperatur
-                <span class="num">7°C</span>
-            </div>
+      </div>
+      <div class="widget-container">
+        <div class="widget">
+          <p class="widget-heading">Air Temp</p>
+          <div class="circle">
+            <span class="num" id="air-temp">0</span>
+            <p>°C</p>
+          </div>
         </div>
+
+        <div class="widget">
+            <p class="widget-heading">Wind speed</p>
+          <div class="circle">
+            <span class="num" id="wind-speed">0</span>
+            <p>m/s</p>
+          </div>
+        </div>
+        <div class="widget">
+            <p class="widget-heading">Precipitation intensity</p>
+          <div class="circle">
+            <span class="num" id="pricipitation">0</span>
+            <p>mm/h</p>
+          </div>
+        </div>
+        <div class="widget">
+            <p class="widget-heading">Thunder probability</p>
+          <div class="circle">
+            <span class="num" id="thunder-prob">0</span>
+            <p class="widget-heading">%</p>
+          </div>
+        </div>
+        <div class="widget">
+          <p class="widget-heading">Horizontal visibility</p>
+        <div class="circle">
+          <span class="num" id="visibility">0</span>
+          <p class="widget-heading">km</p>
+        </div>
+      </div>
+      </div>
     </div>
-    <div class="last-update">
-        Weather fetched 2023-11-06 16:07
-    </div>
-    <script src="https://kit.fontawesome.com/4cb68bf540.js" crossorigin="anonymous"></script>
-</body>
+    <div class="last-update">Weather fetched 2023-11-06 16:07</div>
+    <script
+      src="https://kit.fontawesome.com/4cb68bf540.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
