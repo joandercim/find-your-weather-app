@@ -89,6 +89,7 @@ class App {
 
   closeModal() {
     document.querySelector('.modal').style.display = 'none';
+    document.querySelector('body').classList.remove('modal-open');
   }
 
   openModal(id) {
@@ -109,7 +110,7 @@ class App {
     const precipi = weather.parameters[5].values[0];
     const thunderProb = weather.parameters[16].values[0];
     const horizontalVisibility = weather.parameters[12].values[0];
-    console.log(weather)
+    console.log(weather);
 
     const airTempEl = document.getElementById('air-temp');
     const windSpeedEl = document.getElementById('wind-speed');
